@@ -1,0 +1,36 @@
+version: "3.7"
+
+services:
+    php:
+        depends_on:
+            - mysql
+        image: docker-php-dev
+        restart: always
+        build: .
+        volumes:
+            - ./:/var/www/html
+        ports:
+            - "8080:80"
+
+    mysql:
+        image: mysql:latest
+        restart: always
+        volumes:
+            - mysql:/var/lib/mysql
+        environment:
+            MYSQL_DATABASE: book_management
+            MYSQL_PASSWORD: root
+            MYSQL_ROOT_PASSWORD: root
+
+    phpmyadmin:
+        depends_on:
+            - mysql
+        image: phpmyadmin:latest
+        restart: always
+        ports:
+            - "8001:80"
+        environment:
+            PMA_HOST: mysql
+
+volumes:
+    mysql:
