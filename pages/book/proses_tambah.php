@@ -19,18 +19,22 @@ if ($_SESSION['role'] == "admin") {
     $result = mysqli_query($conn, $sql);
     if ($result) {
         echo "<script>alert('Success add book');location.href='daftar_book_admin.php'</script>";
+        exit();
     } else {
         echo "<script>alert('Failed add book');location.href='daftar_book_member'</script>";
         exit();
     }
 }
 
-$sql = "insert into book (image, title, description, id_user) values ('" . $image . "', '" . $title . "', '" . $description . "', '" . $_SESSION['id_user'] . "' ) ";
+if ($_SESSION['role'] == "member") {
+    $sql = "insert into book (image, title, description, id_user) values ('" . $image . "', '" . $title . "', '" . $description . "', '" . $_SESSION['id_user'] . "' ) ";
 
-$result = mysqli_query($conn, $sql);
-if ($result) {
-    echo "<script>alert('Success add book');location.href='daftar_book_member.php'</script>";
-} else {
-    echo "<script>alert('Failed add book');location.href='daftar_book_member'</script>";
-    exit();
+    $result = mysqli_query($conn, $sql);
+    if ($result) {
+        echo "<script>alert('Success add book');location.href='daftar_book_member.php'</script>";
+        exit();
+    } else {
+        echo "<script>alert('Failed add book');location.href='daftar_book_member'</script>";
+        exit();
+    }
 }
